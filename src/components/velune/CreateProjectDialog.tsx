@@ -27,12 +27,12 @@ export function CreateProjectDialog() {
   const validate = (s: number) => {
     const e: Record<string, string> = {};
     if (s === 0) {
-      if (!f.title.trim()) e.title = "Give your project a name.";
-      if (!f.description.trim()) e.description = "Add a one-line description.";
-      if (!f.category) e.category = "Pick a category.";
+      if (!f.title.trim()) e["title"] = "Give your project a name.";
+      if (!f.description.trim()) e["description"] = "Add a one-line description.";
+      if (!f.category) e["category"] = "Pick a category.";
     }
-    if (s === 1 && !f.goal.trim()) e.goal = "Describe what you want to accomplish.";
-    if (s === 2 && !f.targetDate) e.targetDate = "Choose a target date.";
+    if (s === 1 && !f.goal.trim()) e["goal"] = "Describe what you want to accomplish.";
+    if (s === 2 && !f.targetDate) e["targetDate"] = "Choose a target date.";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -50,7 +50,7 @@ export function CreateProjectDialog() {
   };
 
   const addMilestone = () => {
-    if (!createdId || !ms.title.trim()) return toast.error("Give the milestone a name first.");
+    if (!createdId || !ms.title.trim()) { toast.error("Give the milestone a name first."); return; }
     updateProject(createdId, (p) => ({ ...p, milestones: [...p.milestones, { id: uid(), title: ms.title.trim(), date: ms.date, done: false }] }));
     toast.success("First milestone added");
     const id = createdId;

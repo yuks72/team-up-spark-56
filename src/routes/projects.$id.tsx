@@ -44,7 +44,7 @@ function ProjectDetail() {
         <div className="mt-6 grid gap-6 sm:grid-cols-3">
           <div><p className="label-v">Progress</p><p className="mb-2 text-2xl font-bold text-lilac">{pct}%</p><ProgressBar value={pct} /><p className="mt-2 text-xs text-muted-foreground">{p.tasks.length ? `${p.tasks.filter((t) => t.done).length} of ${p.tasks.length} tasks done` : "Add tasks to start tracking progress"}</p></div>
           <div><p className="label-v">Target date</p><p className="flex items-center gap-2 font-semibold"><Calendar className="h-4 w-4 text-primary" /> {fmtDate(p.targetDate)}</p><p className="mt-1 text-xs text-muted-foreground">{p.commitment}</p></div>
-          <div><p className="label-v">Team</p><ul className="flex flex-wrap gap-2">{p.memberIds.map((m) => members[m] && <li key={m} className="flex items-center gap-2 rounded-full bg-muted py-1 pl-1 pr-3 text-xs"><Avatar name={members[m].name} tone={members[m].avatar} size="sm" />{m === "me" ? "You" : members[m].name}</li>)}</ul>
+          <div><p className="label-v">Team</p><ul className="flex flex-wrap gap-2">{p.memberIds.map((m) => members[m] && <li key={m} className="flex items-center gap-2 rounded-full bg-muted py-1 pl-1 pr-3 text-xs"><Avatar name={members[m]!.name} tone={members[m]!.avatar} size="sm" />{m === "me" ? "You" : members[m]!.name}</li>)}</ul>
             {p.memberIds.length === 1 && <Link to="/discover" className="mt-2 inline-block text-xs text-primary hover:text-lilac">Invite collaborators →</Link>}</div>
         </div>
         {p.skills.length > 0 && <div className="mt-5 flex flex-wrap gap-1.5">{p.skills.map((s) => <span key={s} className="chip !bg-transparent !text-muted-foreground ring-1 ring-border">{s}</span>)}</div>}
@@ -87,7 +87,7 @@ function Milestones({ p, set }: { p: Project; set: (fn: (p: Project) => Project)
           <li key={m.id} className="space-y-2">
             <input aria-label="Milestone title" className="field" value={edit.title} onChange={(e) => setEdit({ ...edit, title: e.target.value })} />
             <input aria-label="Milestone date" type="date" className="field" value={edit.date} onChange={(e) => setEdit({ ...edit, date: e.target.value })} />
-            <div className="flex gap-2"><button className="btn btn-primary btn-sm" onClick={() => { if (!edit.title.trim()) return toast.error("Title can't be empty"); set((x) => ({ ...x, milestones: x.milestones.map((y) => (y.id === m.id ? edit : y)) })); setEdit(null); }}>Save</button><button className="btn btn-ghost btn-sm" onClick={() => setEdit(null)}>Cancel</button></div>
+            <div className="flex gap-2"><button className="btn btn-primary btn-sm" onClick={() => { if (!edit.title.trim()) { toast.error("Title cannot be empty"); return; } set((x) => ({ ...x, milestones: x.milestones.map((y) => (y.id === m.id ? edit : y)) })); setEdit(null); }}>Save</button><button className="btn btn-ghost btn-sm" onClick={() => setEdit(null)}>Cancel</button></div>
           </li>
         ) : (
           <li key={m.id} className="group relative flex items-start gap-3">
@@ -138,7 +138,7 @@ function Tasks({ p, set }: { p: Project; set: (fn: (p: Project) => Project) => v
       <input aria-label="Task title" className="field" value={edit.title} onChange={(e) => setEdit({ ...edit, title: e.target.value })} />
       <textarea aria-label="Task details" rows={2} className="field resize-none" placeholder="Details" value={edit.notes} onChange={(e) => setEdit({ ...edit, notes: e.target.value })} />
       <div className="grid grid-cols-2 gap-2"><Assignee id={`as-${t.id}`} value={edit.assigneeId} onChange={(v) => setEdit({ ...edit, assigneeId: v })} /><input aria-label="Due date" type="date" className="field" value={edit.due} onChange={(e) => setEdit({ ...edit, due: e.target.value })} /></div>
-      <div className="flex gap-2"><button className="btn btn-primary btn-sm" onClick={() => { if (!edit.title.trim()) return toast.error("Title can't be empty"); set((x) => ({ ...x, tasks: x.tasks.map((y) => (y.id === t.id ? edit : y)) })); setEdit(null); toast.success("Task updated"); }}>Save</button><button className="btn btn-ghost btn-sm" onClick={() => setEdit(null)}>Cancel</button></div>
+      <div className="flex gap-2"><button className="btn btn-primary btn-sm" onClick={() => { if (!edit.title.trim()) { toast.error("Title cannot be empty"); return; } set((x) => ({ ...x, tasks: x.tasks.map((y) => (y.id === t.id ? edit : y)) })); setEdit(null); toast.success("Task updated"); }}>Save</button><button className="btn btn-ghost btn-sm" onClick={() => setEdit(null)}>Cancel</button></div>
     </li>
   ) : (
     <li key={t.id} className="flex items-center gap-3 rounded-xl px-2 py-2.5 transition-colors hover:bg-muted/50">
@@ -148,7 +148,7 @@ function Tasks({ p, set }: { p: Project; set: (fn: (p: Project) => Project) => v
         {t.notes && <p className="truncate text-xs text-muted-foreground">{t.notes}</p>}
       </div>
       <span className="hidden text-xs text-muted-foreground sm:inline">{t.due ? fmtDate(t.due) : ""}</span>
-      {members[t.assigneeId] && <Avatar name={members[t.assigneeId].name} tone={members[t.assigneeId].avatar} size="sm" />}
+      {members[t.assigneeId] && <Avatar name={members[t.assigneeId]!.name} tone={members[t.assigneeId]!.avatar} size="sm" />}
       <IconBtn label="Edit task" onClick={() => setEdit(t)}><Pencil /></IconBtn>
       <IconBtn label="Delete task" onClick={() => { set((x) => ({ ...x, tasks: x.tasks.filter((y) => y.id !== t.id) })); toast("Task deleted"); }}><X /></IconBtn>
     </li>
