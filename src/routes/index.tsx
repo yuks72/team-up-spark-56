@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, CheckCircle2, Flame, FolderKanban } from "lucide-react";
 import { useStore, fmtDate, useToday } from "@/lib/velune/store";
 import { isCompleted, streak } from "@/lib/velune/logic";
-import { EmptyState, PageHeader } from "@/components/velune/bits";
+import { EmptyState } from "@/components/velune/bits";
 import { ProjectCard } from "@/components/velune/ProjectCard";
 
 export const Route = createFileRoute("/")({
@@ -116,4 +116,3 @@ function Stat({ icon, label, value }: { icon: React.ReactNode; label: string; va
   );
 }
 
-export { PageHeader };
