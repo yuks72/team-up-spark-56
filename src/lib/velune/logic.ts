@@ -15,7 +15,7 @@ export function isCompleted(p: Pick<Project, "tasks">): boolean {
 export function streak(activity: number[]): number {
   let n = 0;
   for (let i = activity.length - 1; i >= 0; i--) {
-    if (activity[i] > 0) n++;
+    if ((activity[i] ?? 0) > 0) n++;
     else break;
   }
   return n;

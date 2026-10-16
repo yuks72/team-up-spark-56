@@ -14,7 +14,7 @@ export function ProjectCard({ project }: { project: Project }) {
     <Link to="/projects/$id" params={{ id: project.id }} className="card-v card-hover group flex flex-col p-5 hover:-translate-y-0.5">
       <div className="flex items-center justify-between">
         <span className="chip">{project.category}</span>
-        <AvatarStack people={project.memberIds.map((id) => members[id]).filter(Boolean)} />
+        <AvatarStack people={project.memberIds.map((id) => members[id]).filter((m): m is NonNullable<typeof m> => !!m)} />
       </div>
       <h3 className="mt-4 font-semibold leading-snug group-hover:text-lilac">{project.title}</h3>
       <p className="mt-1.5 line-clamp-2 text-sm text-muted-foreground">{project.description}</p>
