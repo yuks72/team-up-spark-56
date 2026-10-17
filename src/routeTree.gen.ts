@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as DiscoverRouteImport } from './routes/discover'
 import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ProjectsIndexRouteImport } from './routes/projects.index'
@@ -18,6 +19,11 @@ import { Route as ProjectsIdRouteImport } from './routes/projects.$id'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarRoute = CalendarRouteImport.update({
+  id: '/calendar',
+  path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DiscoverRoute = DiscoverRouteImport.update({
@@ -43,6 +49,7 @@ const ProjectsIdRoute = ProjectsIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/discover': typeof DiscoverRoute
   '/profile': typeof ProfileRoute
   '/projects/$id': typeof ProjectsIdRoute
@@ -50,6 +57,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/discover': typeof DiscoverRoute
   '/profile': typeof ProfileRoute
   '/projects/$id': typeof ProjectsIdRoute
@@ -58,6 +66,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/calendar': typeof CalendarRoute
   '/discover': typeof DiscoverRoute
   '/profile': typeof ProfileRoute
   '/projects/$id': typeof ProjectsIdRoute
@@ -65,15 +74,29 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/discover' | '/profile' | '/projects/$id' | '/projects/'
+  fullPaths:
+    | '/'
+    | '/calendar'
+    | '/discover'
+    | '/profile'
+    | '/projects/$id'
+    | '/projects/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/discover' | '/profile' | '/projects/$id' | '/projects'
+  to:
+    '/' | '/calendar' | '/discover' | '/profile' | '/projects/$id' | '/projects'
   id:
-    '__root__' | '/' | '/discover' | '/profile' | '/projects/$id' | '/projects/'
+    | '__root__'
+    | '/'
+    | '/calendar'
+    | '/discover'
+    | '/profile'
+    | '/projects/$id'
+    | '/projects/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CalendarRoute: typeof CalendarRoute
   DiscoverRoute: typeof DiscoverRoute
   ProfileRoute: typeof ProfileRoute
   ProjectsIdRoute: typeof ProjectsIdRoute
@@ -87,6 +110,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/calendar': {
+      id: '/calendar'
+      path: '/calendar'
+      fullPath: '/calendar'
+      preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/discover': {
@@ -122,6 +152,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CalendarRoute: CalendarRoute,
   DiscoverRoute: DiscoverRoute,
   ProfileRoute: ProfileRoute,
   ProjectsIdRoute: ProjectsIdRoute,
