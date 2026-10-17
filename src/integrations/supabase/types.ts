@@ -14,7 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      velune_meetings: {
+        Row: {
+          created_at: string
+          date: string
+          description: string
+          id: string
+          owner_id: string
+          project_id: string | null
+          project_title: string | null
+          start_time: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          description?: string
+          id?: string
+          owner_id?: string
+          project_id?: string | null
+          project_title?: string | null
+          start_time: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          description?: string
+          id?: string
+          owner_id?: string
+          project_id?: string | null
+          project_title?: string | null
+          start_time?: string
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
