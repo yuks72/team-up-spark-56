@@ -17,7 +17,7 @@ export function calendarDays(anchor: Date, view: "month" | "week") {
 }
 
 export function validateMeeting(draft: MeetingDraft) {
-  const errors: Record<string, string> = {};
+  const errors: Partial<Record<keyof MeetingDraft, string>> = {};
   if (!draft.title.trim() || draft.title.trim().length > 120) errors.title = "Enter a title between 1 and 120 characters.";
   const date = parseISO(draft.date);
   if (!/^\d{4}-\d{2}-\d{2}$/.test(draft.date) || !isValid(date) || format(date, "yyyy-MM-dd") !== draft.date) errors.date = "Choose a valid meeting date.";

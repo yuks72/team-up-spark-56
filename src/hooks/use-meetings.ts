@@ -36,7 +36,7 @@ export function useMeetings() {
     },
   });
   const save = useMutation({
-    mutationFn: async ({ id, draft }: { id?: string; draft: MeetingDraft }) => {
+    mutationFn: async ({ id, draft }: { id: string | undefined; draft: MeetingDraft }) => {
       if (!owner) throw new Error("Sign in to save meetings.");
       const payload = { ...draft, owner_id: owner };
       const result = id

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { addMonths, addWeeks, format, isSameMonth } from "date-fns";
 import { CalendarDays, ChevronLeft, ChevronRight, Clock, LogOut, Pencil, Plus, Trash2 } from "lucide-react";
@@ -36,6 +36,8 @@ function MeetCalendar() {
   useEffect(() => { if (!owner) { setEditor(null); setDetail(null); setDeleting(null); } }, [owner]);
   const meetings = owner ? query.data ?? [] : [];
   const days = calendarDays(anchor, view);
+  const weekStart = days[0] ?? anchor;
+  const weekEnd = days[6] ?? anchor;
   const upcoming = now ? upcomingMeetings(meetings, now) : [];
   const daily = meetings.filter(m => m.date === selected);
   const newMeeting = (date = selected) => { if (owner) setEditor({ meeting: null, date: date || format(anchor, "yyyy-MM-dd") }); };
@@ -57,7 +59,7 @@ function MeetCalendar() {
       <div className="mt-4 flex flex-wrap gap-3"><Button variant="outline" disabled={signingIn} onClick={() => login("google")}>Continue with Google</Button><Button className="lovable-auth-button" disabled={signingIn} onClick={() => login("lovable")}>Continue with Lovable</Button></div>
     </section>}
     <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-      <div className="flex items-center gap-2"><Button variant="ghost" size="icon" aria-label={`Previous ${view}`} title={`Previous ${view}`} onClick={() => move(-1)}><ChevronLeft /></Button><h2 className="min-w-40 text-center font-semibold">{view === "month" ? format(anchor, "MMMM yyyy") : `${format(days[0], "MMM d")} – ${format(days[6], "MMM d, yyyy")}`}</h2><Button variant="ghost" size="icon" aria-label={`Next ${view}`} title={`Next ${view}`} onClick={() => move(1)}><ChevronRight /></Button></div>
+      <div className="flex items-center gap-2"><Button variant="ghost" size="icon" aria-label={`Previous ${view}`} title={`Previous ${view}`} onClick={() => move(-1)}><ChevronLeft /></Button><h2 className="min-w-40 text-center font-semibold">{view === "month" ? format(anchor, "MMMM yyyy") : `${format(weekStart, "MMM d")} – ${format(weekEnd, "MMM d, yyyy")}`}</h2><Button variant="ghost" size="icon" aria-label={`Next ${view}`} title={`Next ${view}`} onClick={() => move(1)}><ChevronRight /></Button></div>
       <div className="flex items-center gap-3"><Button variant="outline" size="sm" onClick={() => { const date = new Date(); setAnchor(date); setSelected(format(date, "yyyy-MM-dd")); }}>Today</Button><div className="flex rounded-lg border border-border bg-surface p-1" aria-label="Calendar view">{(["month", "week"] as const).map(v => <Button key={v} size="sm" variant={view === v ? "secondary" : "ghost"} aria-pressed={view === v} onClick={() => setView(v)}>{v === "month" ? "Month" : "Week"}</Button>)}</div></div>
     </div>
     <p className="mb-3 flex items-center gap-2 text-xs text-muted-foreground"><Clock className="h-3.5 w-3.5" /> Local time{checking || (owner && query.isPending) ? " · Loading meetings…" : ""}</p>
