@@ -12,6 +12,8 @@ export const Route = createFileRoute("/")({
       { name: "description", content: "Your VELUNE orbit: projects, milestones and weekly momentum in one calm place." },
       { property: "og:title", content: "Home — VELUNE" },
       { property: "og:description", content: "Big ideas feel different when you build them together." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Home,

@@ -16,6 +16,8 @@ export const Route = createFileRoute("/discover")({
       { name: "description", content: "Browse motivated students by interests, skills, and working style, and invite them to build with you." },
       { property: "og:title", content: "Discover collaborators — VELUNE" },
       { property: "og:description", content: "Find your people on VELUNE." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Discover,

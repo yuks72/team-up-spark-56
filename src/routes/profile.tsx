@@ -12,6 +12,8 @@ export const Route = createFileRoute("/profile")({
       { name: "description", content: "Edit your VELUNE profile: interests, skills, and how you like to collaborate." },
       { property: "og:title", content: "My profile — VELUNE" },
       { property: "og:description", content: "Tell collaborators what you care about." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ProfilePage,
