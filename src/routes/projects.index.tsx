@@ -13,6 +13,8 @@ export const Route = createFileRoute("/projects/")({
       { name: "description", content: "All your VELUNE projects, milestones and progress in one place." },
       { property: "og:title", content: "Projects — VELUNE" },
       { property: "og:description", content: "Track what you're building together." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Projects,

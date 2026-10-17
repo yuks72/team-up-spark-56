@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Compass, FolderKanban, Home, Plus, UserRound } from "lucide-react";
+import { CalendarDays, Compass, FolderKanban, Home, Plus, UserRound } from "lucide-react";
 import type { ReactNode } from "react";
 import { useStore } from "@/lib/velune/store";
 import { Avatar, OrbitMark } from "./bits";
@@ -9,6 +9,7 @@ const NAV = [
   { to: "/", label: "Home", icon: Home },
   { to: "/discover", label: "Discover", icon: Compass },
   { to: "/projects", label: "Projects", icon: FolderKanban },
+  { to: "/calendar", label: "Meet", icon: CalendarDays },
   { to: "/profile", label: "My Profile", icon: UserRound },
 ] as const;
 
@@ -65,7 +66,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <div className="mx-auto max-w-6xl">{children}</div>
       </main>
 
-      <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-border bg-surface/95 backdrop-blur md:hidden">
+      <nav aria-label="Main" className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-border bg-surface/95 backdrop-blur md:hidden">
         {NAV.map(({ to, label, icon: Icon }) => (
           <Link
             key={to}

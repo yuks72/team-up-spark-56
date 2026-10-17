@@ -14,6 +14,8 @@ export const Route = createFileRoute("/projects/$id")({
       { name: "description", content: "Milestones, tasks, and weekly check-ins for a VELUNE project." },
       { property: "og:title", content: "Project — VELUNE" },
       { property: "og:description", content: "Build it together, one milestone at a time." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ProjectDetail,
